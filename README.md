@@ -8,6 +8,7 @@ Slow down the audio speed,
 Increase the audio speed. 
 Swipe to switch between songs. Text songs.
 - [X] Artist Mode.
+- [X] Adding your favorite songs to the "Favorite Songs" library.
 - [X] Create and update playlists.
 - [X] Adding a solo song, albom and text songs, cover.
 - [X] Playing in the background.
