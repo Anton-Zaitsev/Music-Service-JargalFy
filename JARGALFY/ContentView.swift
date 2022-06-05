@@ -65,7 +65,7 @@ struct Home : View {
 struct Homescreen : View {
     
     var body: some View{
-            VStack (alignment: .leading){
+        VStack (alignment: .leading){
             Button(action: {
                 
                 try! Auth.auth().signOut()
@@ -102,94 +102,94 @@ struct Login : View {
                 }
                 HStack{
                     VStack{
-                    Text("Миллионы треков.").fontWeight(.heavy).foregroundColor(.white)
-                        .multilineTextAlignment(.center).font(.system(size: UIScreen.main.bounds.width/12, weight: .bold)).padding(.bottom,1.5)
-                    Text("Бесплатно в JargalFy.").fontWeight(.heavy).foregroundColor(.white)
-                        .multilineTextAlignment(.center).font(.system(size: UIScreen.main.bounds.width/12, weight: .bold))
+                        Text("Миллионы треков.").fontWeight(.heavy).foregroundColor(.white)
+                            .multilineTextAlignment(.center).font(.system(size: UIScreen.main.bounds.width/12, weight: .bold)).padding(.bottom,1.5)
+                        Text("Бесплатно в JargalFy.").fontWeight(.heavy).foregroundColor(.white)
+                            .multilineTextAlignment(.center).font(.system(size: UIScreen.main.bounds.width/12, weight: .bold))
                     }.padding(.horizontal)
                 }.padding(.top,UIScreen.main.bounds.height/8)
                 HStack{
                     if self.show == false {
-                    VStack{
-                        HStack{
-                            Image(systemName: "person.crop.circle.fill").font(.system(size: UIScreen.main.bounds.width/10, weight: .regular)).padding(.leading,10).foregroundColor(.white)
-                            TextField("Почта", text: self.$email).multilineTextAlignment(.leading).padding().foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/20, weight: .regular)).textContentType(.emailAddress)
-                        }.background(Color.black)
-                        .cornerRadius(20).padding(.horizontal).padding(.top,30)
-                        HStack{
-                            Image(systemName: "lock.fill").font(.system(size: UIScreen.main.bounds.width/10, weight: .regular)).padding(.leading,16).foregroundColor(.white)
-                            if self.visible{
-
-                                TextField("Пароль", text: self.$pass)
-                                    .multilineTextAlignment(.leading).padding().foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/20, weight: .regular))
+                        VStack{
+                            HStack{
+                                Image(systemName: "person.crop.circle.fill").font(.system(size: UIScreen.main.bounds.width/10, weight: .regular)).padding(.leading,10).foregroundColor(.white)
+                                TextField("Почта", text: self.$email).multilineTextAlignment(.leading).padding().foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/20, weight: .regular)).textContentType(.emailAddress)
+                            }.background(Color.black)
+                                .cornerRadius(20).padding(.horizontal).padding(.top,30)
+                            HStack{
+                                Image(systemName: "lock.fill").font(.system(size: UIScreen.main.bounds.width/10, weight: .regular)).padding(.leading,16).foregroundColor(.white)
+                                if self.visible{
+                                    
+                                    TextField("Пароль", text: self.$pass)
+                                        .multilineTextAlignment(.leading).padding().foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/20, weight: .regular))
+                                }
+                                else{
+                                    
+                                    SecureField("Пароль", text: self.$pass)
+                                        .multilineTextAlignment(.leading).padding().foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/20, weight: .regular))
+                                }
+                                
+                                Button(action: {
+                                    
+                                    self.visible.toggle()
+                                    
+                                }) {
+                                    
+                                    Image(systemName: self.visible ? "eye.slash.fill" : "eye.fill")
+                                        .foregroundColor(Color.white.opacity(0.7))
+                                }.padding(.trailing,15)
+                            }.background(Color.black)
+                                .cornerRadius(20).padding(.horizontal).padding(.top,5)
+                            HStack{
+                                Spacer()
+                                
+                                Button(action: {
+                                    
+                                    self.resetPassword()
+                                    
+                                }) {
+                                    
+                                    Text("Забыли пароль?")
+                                        .fontWeight(.bold)
+                                        .foregroundColor(Color.black)
+                                }
+                            }.padding(.top,3).padding(.trailing,20).padding(.bottom,5)
+                            HStack{
+                                if self.alert{
+                                    
+                                    ErrorView(alert: self.$alert, error: self.$error)
+                                }
                             }
-                            else{
-
-                                SecureField("Пароль", text: self.$pass)
-                                    .multilineTextAlignment(.leading).padding().foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/20, weight: .regular))
+                            HStack{
+                                Button(action: {
+                                    
+                                    self.show.toggle()
+                                    
+                                }) {
+                                    
+                                    Text("Зарегистрироваться").foregroundColor(.white).padding(.horizontal,UIScreen.main.bounds.width/6).padding(.vertical,16).background(Color.init(red: 27.0/255.0, green: 155.0/255.0, blue: 0.0/255.0)).cornerRadius(20).font(.system(size: UIScreen.main.bounds.width/20, weight: .bold))
+                                }
+                            }.padding(.top,5)
+                            HStack{
+                                Button(action: {
+                                    self.verify()
+                                    
+                                }) {
+                                    
+                                    Text("Войти").foregroundColor(.white).padding(.horizontal,UIScreen.main.bounds.width/2.9).padding(.vertical,16).background(Color.black).cornerRadius(20).font(.system(size: UIScreen.main.bounds.width/20, weight: .bold))
+                                }.padding(.top,5).padding(.bottom,5)
                             }
-                        
-                        Button(action: {
-
-                            self.visible.toggle()
-
-                        }) {
-
-                            Image(systemName: self.visible ? "eye.slash.fill" : "eye.fill")
-                                .foregroundColor(Color.white.opacity(0.7))
-                        }.padding(.trailing,15)
-                        }.background(Color.black)
-                        .cornerRadius(20).padding(.horizontal).padding(.top,5)
-                        HStack{
-                            Spacer()
-
-                            Button(action: {
-
-                              self.resetPassword()
-
-                            }) {
-
-                                Text("Забыли пароль?")
-                                    .fontWeight(.bold)
-                                    .foregroundColor(Color.black)
-                            }
-                        }.padding(.top,3).padding(.trailing,20).padding(.bottom,5)
-                        HStack{
-                        if self.alert{
-
-                            ErrorView(alert: self.$alert, error: self.$error)
+                            
                         }
-                        }
-                        HStack{
-                            Button(action: {
-
-                                self.show.toggle()
-
-                            }) {
-
-                                Text("Зарегистрироваться").foregroundColor(.white).padding(.horizontal,UIScreen.main.bounds.width/6).padding(.vertical,16).background(Color.init(red: 27.0/255.0, green: 155.0/255.0, blue: 0.0/255.0)).cornerRadius(20).font(.system(size: UIScreen.main.bounds.width/20, weight: .bold))
-                            }
-                        }.padding(.top,5)
-                        HStack{
-                            Button(action: {
-                                self.verify()
-
-                            }) {
-
-                                Text("Войти").foregroundColor(.white).padding(.horizontal,UIScreen.main.bounds.width/2.9).padding(.vertical,16).background(Color.black).cornerRadius(20).font(.system(size: UIScreen.main.bounds.width/20, weight: .bold))
-                            }.padding(.top,5).padding(.bottom,5)
-                        }
-
-            }
                     }
-        }
-    }
+                }
+            }
         }
         
-       
+        
     }
     
-   private func verify(){
+    private func verify(){
         
         if self.email != "" && self.pass != ""{
             
@@ -204,11 +204,11 @@ struct Login : View {
                 print("success")
                 UserDefaults.standard.set(true, forKey: "status")
                 NotificationCenter.default.post(name: NSNotification.Name("status"), object: nil)
-    
+                
             }
         }
         else{
-           
+            
             self.error = "Пожалуйста введите свою почту и пароль"
             self.alert.toggle()
         }
@@ -252,87 +252,87 @@ struct Registration : View {
     
     var body: some View{
         if show == true {
-        ZStack (alignment : .center){
-            Color(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0).edgesIgnoringSafeArea(.all)
-            VStack{
-             
-                HStack {
-                Text("Зарегистрируйте свой новый аккаунт в JargalFy").fontWeight(.heavy).foregroundColor(.white)
-                    .multilineTextAlignment(.center).font(.system(size: UIScreen.main.bounds.width/16, weight: .bold)).padding(.horizontal).multilineTextAlignment(.center)
-                }.padding(.horizontal)
-        
+            ZStack (alignment : .center){
+                Color(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0).edgesIgnoringSafeArea(.all)
+                VStack{
+                    
+                    HStack {
+                        Text("Зарегистрируйте свой новый аккаунт в JargalFy").fontWeight(.heavy).foregroundColor(.white)
+                            .multilineTextAlignment(.center).font(.system(size: UIScreen.main.bounds.width/16, weight: .bold)).padding(.horizontal).multilineTextAlignment(.center)
+                    }.padding(.horizontal)
+                    
                     HStack{
                         Image(systemName: "person.crop.circle.fill").font(.system(size: UIScreen.main.bounds.width/10, weight: .regular)).padding(.leading,10).foregroundColor(.white)
                         TextField("Почта", text: self.$email).multilineTextAlignment(.leading).padding().foregroundColor(.red).font(.system(size: UIScreen.main.bounds.width/20, weight: .regular)).textContentType(.emailAddress)
                     }.background(Color.black)
-                    .cornerRadius(20).padding(.horizontal).padding(.top,20)
-                HStack{
-                    Image(systemName: "lock.fill").font(.system(size: UIScreen.main.bounds.width/10, weight: .regular)).padding(.leading,10).foregroundColor(.white)
-                    if self.visible{
-
-                        TextField("Пароль", text: self.$pass)
-                            .multilineTextAlignment(.leading).padding().padding(.leading,5).foregroundColor(.red).font(.system(size: UIScreen.main.bounds.width/20, weight: .regular))
+                        .cornerRadius(20).padding(.horizontal).padding(.top,20)
+                    HStack{
+                        Image(systemName: "lock.fill").font(.system(size: UIScreen.main.bounds.width/10, weight: .regular)).padding(.leading,10).foregroundColor(.white)
+                        if self.visible{
+                            
+                            TextField("Пароль", text: self.$pass)
+                                .multilineTextAlignment(.leading).padding().padding(.leading,5).foregroundColor(.red).font(.system(size: UIScreen.main.bounds.width/20, weight: .regular))
+                        }
+                        else{
+                            
+                            SecureField("Пароль", text: self.$pass)
+                                .multilineTextAlignment(.leading).padding().padding(.leading,5).foregroundColor(.red).font(.system(size: UIScreen.main.bounds.width/20, weight: .regular))
+                        }
+                        
+                        Button(action: {
+                            
+                            self.visible.toggle()
+                            
+                        }) {
+                            
+                            Image(systemName: self.visible ? "eye.slash.fill" : "eye.fill")
+                                .foregroundColor(Color.white.opacity(0.7))
+                        }.padding(.trailing,15)
+                    }.background(Color.black)
+                        .cornerRadius(20).padding(.horizontal).padding(.top,5)
+                    
+                    HStack{
+                        Image(systemName: "checkmark.circle.fill").font(.system(size: UIScreen.main.bounds.width/11, weight: .regular)).padding(.leading,10).foregroundColor(.white)
+                        if self.revisible{
+                            
+                            TextField("Повторите пароль", text: self.$repass)
+                                .multilineTextAlignment(.leading).padding().padding(.leading,5).foregroundColor(.red).font(.system(size: UIScreen.main.bounds.width/20, weight: .regular))
+                        }
+                        else{
+                            
+                            SecureField("Повторите пароль", text: self.$repass)
+                                .multilineTextAlignment(.leading).padding().padding(.leading,5).foregroundColor(.red).font(.system(size: UIScreen.main.bounds.width/20, weight: .regular))
+                        }
+                        
+                        Button(action: {
+                            
+                            self.revisible.toggle()
+                            
+                        }) {
+                            
+                            Image(systemName: self.revisible ? "eye.slash.fill" : "eye.fill")
+                                .foregroundColor(Color.white.opacity(0.7))
+                        }.padding(.trailing,15)
+                    }.background(Color.black)
+                        .cornerRadius(20).padding(.horizontal).padding(.top,5)
+                    HStack{
+                        if self.alert{
+                            
+                            ErrorView(alert: self.$alert, error: self.$error).padding(.vertical,5)
+                        }
                     }
-                    else{
-
-                        SecureField("Пароль", text: self.$pass)
-                            .multilineTextAlignment(.leading).padding().padding(.leading,5).foregroundColor(.red).font(.system(size: UIScreen.main.bounds.width/20, weight: .regular))
-                    }
-                
-                Button(action: {
-
-                    self.visible.toggle()
-
-                }) {
-
-                    Image(systemName: self.visible ? "eye.slash.fill" : "eye.fill")
-                        .foregroundColor(Color.white.opacity(0.7))
-                }.padding(.trailing,15)
-                }.background(Color.black)
-                .cornerRadius(20).padding(.horizontal).padding(.top,5)
-                
-                HStack{
-                    Image(systemName: "checkmark.circle.fill").font(.system(size: UIScreen.main.bounds.width/11, weight: .regular)).padding(.leading,10).foregroundColor(.white)
-                    if self.revisible{
-
-                        TextField("Повторите пароль", text: self.$repass)
-                            .multilineTextAlignment(.leading).padding().padding(.leading,5).foregroundColor(.red).font(.system(size: UIScreen.main.bounds.width/20, weight: .regular))
-                    }
-                    else{
-
-                        SecureField("Повторите пароль", text: self.$repass)
-                            .multilineTextAlignment(.leading).padding().padding(.leading,5).foregroundColor(.red).font(.system(size: UIScreen.main.bounds.width/20, weight: .regular))
-                    }
-               
-                Button(action: {
-
-                    self.revisible.toggle()
-
-                }) {
-
-                    Image(systemName: self.revisible ? "eye.slash.fill" : "eye.fill")
-                        .foregroundColor(Color.white.opacity(0.7))
-                }.padding(.trailing,15)
-                }.background(Color.black)
-                .cornerRadius(20).padding(.horizontal).padding(.top,5)
-                HStack{
-                    if self.alert{
-
-                        ErrorView(alert: self.$alert, error: self.$error).padding(.vertical,5)
-                    }
+                    HStack{
+                        Button(action: {
+                            
+                            self.register()
+                        }) {
+                            
+                            Text("Зарегистироваться")
+                                .foregroundColor(.white).padding(.horizontal,UIScreen.main.bounds.width/6).padding(.vertical,16).background(Color.init(red: 27.0/255.0, green: 155.0/255.0, blue: 0.0/255.0)).cornerRadius(20).font(.system(size: UIScreen.main.bounds.width/20, weight: .bold))
+                        }
+                    }.padding(.top,20)
                 }
-                HStack{
-                Button(action: {
-
-                    self.register()
-                }) {
-
-                    Text("Зарегистироваться")
-                        .foregroundColor(.white).padding(.horizontal,UIScreen.main.bounds.width/6).padding(.vertical,16).background(Color.init(red: 27.0/255.0, green: 155.0/255.0, blue: 0.0/255.0)).cornerRadius(20).font(.system(size: UIScreen.main.bounds.width/20, weight: .bold))
-                }
-                }.padding(.top,20)
-}
-        }.navigationBarBackButtonHidden(false).frame(height: UIScreen.main.bounds.height, alignment: .center)
+            }.navigationBarBackButtonHidden(false).frame(height: UIScreen.main.bounds.height, alignment: .center)
         }
     }
     
@@ -364,7 +364,7 @@ struct Registration : View {
                             print("error = \(error)")
                         } else {
                             print("data uploaded successfully")
-
+                            
                         }
                     }
                     
@@ -377,7 +377,7 @@ struct Registration : View {
                             print("error = \(error)")
                         } else {
                             print("data uploaded successfully")
-        
+                            
                         }
                     }
                     
@@ -395,7 +395,7 @@ struct Registration : View {
                             print("error = \(error)")
                         } else {
                             print("data uploaded successfully")
-        
+                            
                         }
                     }
                     
@@ -409,7 +409,7 @@ struct Registration : View {
                             print("error = \(error)")
                         } else {
                             print("data uploaded successfully")
-        
+                            
                         }
                     }
                     let docSearch = Firestore.firestore().document("users/\(uid)/Search/Search")
@@ -422,7 +422,7 @@ struct Registration : View {
                             print("error = \(error)")
                         } else {
                             print("data uploaded successfully")
-        
+                            
                         }
                     }
                     let MyMusik = Firestore.firestore().document("users/\(uid)/MyMusik/MyMusik")
@@ -438,7 +438,7 @@ struct Registration : View {
                             print("error = \(error)")
                         } else {
                             print("data uploaded successfully")
-        
+                            
                         }
                     }
                     print("success")
@@ -469,41 +469,41 @@ struct ErrorView : View {
         ZStack{
             HStack{
                 
-                    if self.error == "ResetPassword" || self.error == "Паспорт обнулен"{
-                        if self.error == "Паспорт обнулен"{
-                            HStack{
-                                
-                                Text("На вашей почте ссылка на восстановление пароля").foregroundColor(.black).font(.system(size: UIScreen.main.bounds.width/24, weight: .bold)).padding(.leading,UIScreen.main.bounds.width/24)
-                                Button(action: {
-
-                                    self.alert.toggle()
-
-                                }) {
-                                    Text("Скрыть").foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/28, weight: .bold)).padding(.horizontal,3)
-                                }
-                            }.frame(width: UIScreen.main.bounds.width-60,height: UIScreen.main.bounds.width/20+40, alignment: .center).background(Color.init(red: 27.0/255.0, green: 155.0/255.0, blue: 0.0/255.0)).font(.system(size: UIScreen.main.bounds.width/20)).cornerRadius(20).padding(.top,3)
-                        }
-                           
-                    }
-                    else{
-                        
+                if self.error == "ResetPassword" || self.error == "Паспорт обнулен"{
+                    if self.error == "Паспорт обнулен"{
                         HStack{
                             
-                            Text(self.error).foregroundColor(.black).font(.system(size: UIScreen.main.bounds.width/24, weight: .bold)).padding(.leading,UIScreen.main.bounds.width/24)
+                            Text("На вашей почте ссылка на восстановление пароля").foregroundColor(.black).font(.system(size: UIScreen.main.bounds.width/24, weight: .bold)).padding(.leading,UIScreen.main.bounds.width/24)
                             Button(action: {
-
+                                
                                 self.alert.toggle()
-
+                                
                             }) {
                                 Text("Скрыть").foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/28, weight: .bold)).padding(.horizontal,3)
                             }
-                        }.frame(width: UIScreen.main.bounds.width-60,height: UIScreen.main.bounds.width/20+40, alignment: .center).background(Color(red: 204.0/255.0, green: 25.0/255.0, blue: 42.0/255.0)).font(.system(size: UIScreen.main.bounds.width/20)).cornerRadius(20).padding(.top,3)
-                        
+                        }.frame(width: UIScreen.main.bounds.width-60,height: UIScreen.main.bounds.width/20+40, alignment: .center).background(Color.init(red: 27.0/255.0, green: 155.0/255.0, blue: 0.0/255.0)).font(.system(size: UIScreen.main.bounds.width/20)).cornerRadius(20).padding(.top,3)
                     }
+                    
+                }
+                else{
+                    
+                    HStack{
+                        
+                        Text(self.error).foregroundColor(.black).font(.system(size: UIScreen.main.bounds.width/24, weight: .bold)).padding(.leading,UIScreen.main.bounds.width/24)
+                        Button(action: {
+                            
+                            self.alert.toggle()
+                            
+                        }) {
+                            Text("Скрыть").foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/28, weight: .bold)).padding(.horizontal,3)
+                        }
+                    }.frame(width: UIScreen.main.bounds.width-60,height: UIScreen.main.bounds.width/20+40, alignment: .center).background(Color(red: 204.0/255.0, green: 25.0/255.0, blue: 42.0/255.0)).font(.system(size: UIScreen.main.bounds.width/20)).cornerRadius(20).padding(.top,3)
+                    
+                }
                 
             }
         }
-
+        
     }
 }
 

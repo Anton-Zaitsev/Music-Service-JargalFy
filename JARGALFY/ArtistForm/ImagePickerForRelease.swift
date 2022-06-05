@@ -37,9 +37,9 @@ struct imagePickerSongs: UIViewControllerRepresentable {
             // Upload the file to the path FILE_NAME
             storage.putData(image.jpegData(compressionQuality: 0.42)!, metadata: metadata) { (metadata, error) in
                 guard let metadata = metadata else {
-                  // Uh-oh, an error occurred!
-                  print((error?.localizedDescription)!)
-                  return
+                    // Uh-oh, an error occurred!
+                    print((error?.localizedDescription)!)
+                    return
                 }
                 // Metadata contains file metadata such as size, content-type.
                 let size = metadata.size
@@ -69,20 +69,11 @@ struct imagePickerSongs: UIViewControllerRepresentable {
         func listOfImageFile() {
             let  storageReference  = Storage.storage().reference().child("Musik").child(self.parent.NickName).child(self.parent.nameAlbom).child("Image")
             storageReference.listAll { (result, error) in
-              if error != nil {
-                  // Handle any errors
-                  print((error?.localizedDescription)!)
-                  return
-              }
-              for prefix in result.prefixes {
-                // The prefixes under storageReference.
-                // You may call listAll(completion:) recursively on them.
-                print("prefix is \(prefix)")
-              }
-              for item in result.items {
-                // The items under storageReference.
-                print("items is \(item)")
-              }
+                if error != nil {
+                    // Handle any errors
+                    print((error?.localizedDescription)!)
+                    return
+                }
             }
         }
     }

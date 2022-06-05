@@ -45,108 +45,108 @@ struct PlayListTab: View {
     func likeMusik(){
         let data = (NamePlayList != "Любимые треки" ? NamePlayList : "MyLoveTrack")
         if let user = user {
-          let uid = user.uid
-        db.collection("users").document(uid).collection("PlaylistUser").document(data).collection(data).addSnapshotListener { (snap, err) in
-            
-            if err != nil{
+            let uid = user.uid
+            db.collection("users").document(uid).collection("PlaylistUser").document(data).collection(data).addSnapshotListener { (snap, err) in
                 
-                print((err?.localizedDescription)!)
-                return
-            }
-            for i in snap!.documentChanges{
-                if i.type == .added{
-                    let NameArtist = i.document.get("NameArtist") as! Array<String>
-                    let NameTrack = i.document.get("NameTrack") as! Array<String>
-                    for g in SearchDataList.Search {
-                    addMusikLike =  Array (repeating: 0, count: g.NameArtist.count)
-                        if NameArtist.count != 0 {
-                        for index in 0..<g.NameArtist.count {
-                            for indexLike in 0..<NameTrack.count {
-                            if NameArtist[indexLike] == g.NameArtist[index] && NameTrack[indexLike] == g.NameTrack[index]{
-                                addMusikLike[index] = 1
-                            }
-                            }
-                        }
-                        }
-                    }
+                if err != nil{
                     
+                    print((err?.localizedDescription)!)
+                    return
+                }
+                for i in snap!.documentChanges{
+                    if i.type == .added{
+                        let NameArtist = i.document.get("NameArtist") as! Array<String>
+                        let NameTrack = i.document.get("NameTrack") as! Array<String>
+                        for g in SearchDataList.Search {
+                            addMusikLike =  Array (repeating: 0, count: g.NameArtist.count)
+                            if NameArtist.count != 0 {
+                                for index in 0..<g.NameArtist.count {
+                                    for indexLike in 0..<NameTrack.count {
+                                        if NameArtist[indexLike] == g.NameArtist[index] && NameTrack[indexLike] == g.NameTrack[index]{
+                                            addMusikLike[index] = 1
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
                 }
             }
         }
-        }
-        }
+    }
     func updateBack(){
-
+        
         if let user = user {
-          let uid = user.uid
+            let uid = user.uid
             let docList = Firestore.firestore().document("users/\(uid)/usersList/PlayListUserArray")
             db.collection("users").document(uid).collection("usersList").addSnapshotListener { (snap, err) in
-            if err != nil{
-                
-                print((err?.localizedDescription)!)
-                print("Ошибка")
-                return
-            }
-            for i in snap!.documentChanges{
-                if i.type == .added{
-                    let Playlist = i.document.get("MassPlayList") as! Array<String>
-                    var CountTrack = i.document.get("CountTrack") as! Array<Int>
-                    for g in DataBasePlayListClick.DataPlayListClick {
-                        for index in 0..<Playlist.count{
-                            if Playlist[index] == (g.NamePlayList != "Любимые треки" ? g.NamePlayList : "MyLoveTrack"){
-                                CountTrack[index] = g.NameTrack.count
-                                print("Выполнено")
-                            }
-                            else{
-                                print("Не найдено")
+                if err != nil{
+                    
+                    print((err?.localizedDescription)!)
+                    print("Ошибка")
+                    return
+                }
+                for i in snap!.documentChanges{
+                    if i.type == .added{
+                        let Playlist = i.document.get("MassPlayList") as! Array<String>
+                        var CountTrack = i.document.get("CountTrack") as! Array<Int>
+                        for g in DataBasePlayListClick.DataPlayListClick {
+                            for index in 0..<Playlist.count{
+                                if Playlist[index] == (g.NamePlayList != "Любимые треки" ? g.NamePlayList : "MyLoveTrack"){
+                                    CountTrack[index] = g.NameTrack.count
+                                    print("Выполнено")
+                                }
+                                else{
+                                    print("Не найдено")
+                                }
                             }
                         }
-                        }
-                    let NewData = [
-                        "MassPlayList": Playlist,
-                        "CountTrack" : CountTrack
-                    ] as [String : Any]
-                    docList.setData(NewData){ (error) in
-                        if let error = error {
-                            print("error = \(error)")
-                        } else {
-                            print("data uploaded successfully")
-
+                        let NewData = [
+                            "MassPlayList": Playlist,
+                            "CountTrack" : CountTrack
+                        ] as [String : Any]
+                        docList.setData(NewData){ (error) in
+                            if let error = error {
+                                print("error = \(error)")
+                            } else {
+                                print("data uploaded successfully")
+                                
+                            }
                         }
                     }
                 }
             }
-        }
         }
     }
     var body: some View {
         if addMusik == false {
-        ZStack(alignment: Alignment(horizontal: .center, vertical: .top)) {
-            RadialGradient(gradient: Gradient(colors: [Color(red: 74.0/255.0, green: 0.0/255.0, blue: 224.0/255.0), Color(red: 142.0/255.0, green: 45.0/255.0, blue: 226.0/255.0)]), center: .center, startRadius: 0, endRadius: UIScreen.main.bounds.height).edgesIgnoringSafeArea(.all)
-            ScrollView(.vertical, showsIndicators: false) {
-                
-                VStack{
-                    GeometryReader{reader in
-                        
-                        VStack{
-                            RemoteImage(type: .url(URL(string: iImage)!), errorView: { error in
-                                Text(error.localizedDescription)
-                            }, imageView: { image in
-                                image
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                            }, loadingView: {
-                                ProgressView()
-                            })
+            ZStack(alignment: Alignment(horizontal: .center, vertical: .top)) {
+                RadialGradient(gradient: Gradient(colors: [Color(red: 74.0/255.0, green: 0.0/255.0, blue: 224.0/255.0), Color(red: 142.0/255.0, green: 45.0/255.0, blue: 226.0/255.0)]), center: .center, startRadius: 0, endRadius: UIScreen.main.bounds.height).edgesIgnoringSafeArea(.all)
+                ScrollView(.vertical, showsIndicators: false) {
+                    
+                    VStack{
+                        GeometryReader{reader in
+                            
+                            VStack{
+                                RemoteImage(type: .url(URL(string: iImage)!), errorView: { error in
+                                    Text(error.localizedDescription)
+                                }, imageView: { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fill)
+                                }, loadingView: {
+                                    ProgressView()
+                                })
                                 .frame(width: UIScreen.main.bounds.width, height: reader.frame(in: .global).minY > 0 ? reader.frame(in: .global).minY + (UIScreen.main.bounds.height / 2.2) : UIScreen.main.bounds.height / 2.2)
                                 .offset(y: -reader.frame(in: .global).minY)
-
+                                
                                 .onChange(of: reader.frame(in: .global).minY){value in
-                         
+                                    
                                     let offset = value + (UIScreen.main.bounds.height / 2.2)
                                     
                                     if offset < 80{
-                                       
+                                        
                                         if offset > 0{
                                             
                                             let opacity_value = (80 - offset) / 80
@@ -155,7 +155,7 @@ struct PlayListTab: View {
                                             
                                             return
                                         }
-                                       
+                                        
                                         self.opacitys = 1
                                     }
                                     else{
@@ -163,58 +163,58 @@ struct PlayListTab: View {
                                         self.opacitys = 0
                                     }
                                 }
+                            }
+                            
                         }
                         
+                        .frame(height: UIScreen.main.bounds.height / 2.3)
+                        AlbomMusik()
                     }
-                 
-                    .frame(height: UIScreen.main.bounds.height / 2.3)
-                    AlbomMusik()
-                }
-                
-            }
-            HStack{
-                ZStack{
-                    Button(action: {seePlayListTab.toggle()
-                        updateBack()
-                        print(DataBasePlayListClick.DataPlayListClick)
-                    }) {
                     
-                    HStack{
-                        
-                        Image(systemName: "chevron.left")
-                            .font(.system(size: 22, weight: .bold))
-                        
-                        Text("Назад")
-                            .fontWeight(.semibold)
+                }
+                HStack{
+                    ZStack{
+                        Button(action: {seePlayListTab.toggle()
+                            updateBack()
+                            print(DataBasePlayListClick.DataPlayListClick)
+                        }) {
+                            
+                            HStack{
+                                
+                                Image(systemName: "chevron.left")
+                                    .font(.system(size: 22, weight: .bold))
+                                
+                                Text("Назад")
+                                    .fontWeight(.semibold)
+                            }
+                            Spacer()
+                        }
+                        HStack{
+                            if opacitys > 0.6 {
+                                if  iNamePlayList.count <= 12 {
+                                    Text(iNamePlayList).fontWeight(.bold).foregroundColor(.white).font(.title2)
+                                }
+                                else {
+                                    Text(iNamePlayList).fontWeight(.bold).foregroundColor(.white).font(.title2).padding(.leading,15)
+                                }
+                            }
+                        }
                     }
                     Spacer()
                 }
-                HStack{
-                    if opacitys > 0.6 {
-                        if  iNamePlayList.count <= 12 {
-                        Text(iNamePlayList).fontWeight(.bold).foregroundColor(.white).font(.title2)
-                        }
-                        else {
-                            Text(iNamePlayList).fontWeight(.bold).foregroundColor(.white).font(.title2).padding(.leading,15)
-                        }
-                        }
-                }
-                }
-                Spacer()
-            }
-            .padding()
-            .foregroundColor(opacitys > 0.6 ? .white : .white)
-            .padding(.top,edges!.top)
-            .background(Color.black.opacity(opacitys))
-            .shadow(color: Color.black.opacity(opacitys > 0.8 ? 0.1 : 0), radius: 5, x: 0, y: 5)
-        
-        }.ignoresSafeArea(.all, edges: .top)
+                .padding()
+                .foregroundColor(opacitys > 0.6 ? .white : .white)
+                .padding(.top,edges!.top)
+                .background(Color.black.opacity(opacitys))
+                .shadow(color: Color.black.opacity(opacitys > 0.8 ? 0.1 : 0), radius: 5, x: 0, y: 5)
+                
+            }.ignoresSafeArea(.all, edges: .top)
         }
         else {
-                //    Добавим searchbar
+            //    Добавим searchbar
             AddMusikPlayList(seeTabBar: $seeTabBar, addMusik: $addMusik, addMusikLike: $addMusikLike,iNamePlayList: $iNamePlayList).environmentObject(DataBasePlayListClick)
         }
-        }
+    }
     private func AlbomMusik() -> some View {
         return VStack{
             VStack{
@@ -224,7 +224,7 @@ struct PlayListTab: View {
                         Text(NameTrack.count == 1 ? "2020, \(NameTrack.count) трек." :"2020, \(NameTrack.count) треков.").padding(.leading,20).foregroundColor(.gray)
                     }
                     Spacer()
-                   
+                    
                 }
                 HStack{
                     Spacer()
@@ -241,48 +241,48 @@ struct PlayListTab: View {
                     Spacer()
                 }
                 if NameTrack.count != 0 {
-                ForEach((0..<NameTrack.count).reversed(), id: \.self) { index in
-                HStack{
-                    RemoteImage(type: .url(URL(string: ImageTrack.count == 1 ? ImageTrack[0] : ImageTrack[index])!), errorView: { error in
-                        Text(error.localizedDescription)
-                    }, imageView: { image in
-                        image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                    }, loadingView: {
-                        ProgressView()
-                    }).frame(width: 60, height: 60)
-                    VStack (alignment: .leading){
-                        Text(NameTrack[index]).fontWeight(.bold).foregroundColor(.white).padding(.leading,10).font(.system(size: UIScreen.main.bounds.width/23))
-                        Text(NameArtist[index]).foregroundColor(.gray).padding(.leading,10)
+                    ForEach((0..<NameTrack.count).reversed(), id: \.self) { index in
+                        HStack{
+                            RemoteImage(type: .url(URL(string: ImageTrack.count == 1 ? ImageTrack[0] : ImageTrack[index])!), errorView: { error in
+                                Text(error.localizedDescription)
+                            }, imageView: { image in
+                                image
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                            }, loadingView: {
+                                ProgressView()
+                            }).frame(width: 60, height: 60)
+                            VStack (alignment: .leading){
+                                Text(NameTrack[index]).fontWeight(.bold).foregroundColor(.white).padding(.leading,10).font(.system(size: UIScreen.main.bounds.width/23))
+                                Text(NameArtist[index]).foregroundColor(.gray).padding(.leading,10)
+                            }
+                            Spacer()
+                        }.padding(.leading,20).padding(.bottom,5)
+                        
+                            .onTapGesture{
+                                self.indexPlayer = 3
+                                self.seeAudioplay = false
+                                self.countMusik = index
+                                boolNextAuido = true
+                                playAndpausetogle = true
+                                self.seeAudioplay = true
+                            }
+                            .onChange(of: index, perform: { value in
+                                self.countMusik = index
+                                
+                            })
+                        
                     }
-                    Spacer()
-                }.padding(.leading,20).padding(.bottom,5)
-                
-                .onTapGesture{
-                    self.indexPlayer = 3
-                self.seeAudioplay = false
-                self.countMusik = index
-                    boolNextAuido = true
-                    playAndpausetogle = true
-                self.seeAudioplay = true
                 }
-                .onChange(of: index, perform: { value in
-                    self.countMusik = index
-
-                })
-
-                }
-            }
                 
             }
             .padding(.top,5).padding(.bottom,10)
             .background(RadialGradient(gradient: Gradient(colors: [Color(red: 74.0/255.0, green: 0.0/255.0, blue: 224.0/255.0), Color(red: 142.0/255.0, green: 45.0/255.0, blue: 226.0/255.0)]), center: .center, startRadius: 0, endRadius: UIScreen.main.bounds.height).edgesIgnoringSafeArea(.all))
-    
             
-
+            
+            
         }
-
+        
     }
 }
 

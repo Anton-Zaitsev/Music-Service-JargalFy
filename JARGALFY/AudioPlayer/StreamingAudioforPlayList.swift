@@ -48,73 +48,73 @@ struct StreamingAudioforPlayList: View {
     let db = Firestore.firestore()
     var body: some View {
         if self.DataMedia.DataPlayListClick.count != 0{
-                    VStack{
-                        HStack{
-                            if !self.show {
-                                ForEach(self.DataMedia.DataPlayListClick){ i in
-                                VStack{
-                                    ZStack(alignment: .leading){
-                                        Capsule().fill(Color(red: 64.0/255.0, green: 64.0/255.0, blue: 64.0/255.0)).frame(height: 6)
-                                        Capsule().fill(Color.red).frame(width: CGFloat(withScreen+30) * CGFloat(position), height: 6)
-                                            .gesture(DragGesture()
-                                         .onChanged({ (value) in
-                                         SAPlayer.shared.pause()
-                                         let x = value.location.x
-                                          position = CGFloat(Float(x)/Float(UIScreen.main.bounds.width - 30))
-                                           if duration - with <= 1 && with != 0{next()}
+            VStack{
+                HStack{
+                    if !self.show {
+                        ForEach(self.DataMedia.DataPlayListClick){ i in
+                            VStack{
+                                ZStack(alignment: .leading){
+                                    Capsule().fill(Color(red: 64.0/255.0, green: 64.0/255.0, blue: 64.0/255.0)).frame(height: 6)
+                                    Capsule().fill(Color.red).frame(width: CGFloat(withScreen+30) * CGFloat(position), height: 6)
+                                        .gesture(DragGesture()
+                                            .onChanged({ (value) in
+                                                SAPlayer.shared.pause()
+                                                let x = value.location.x
+                                                position = CGFloat(Float(x)/Float(UIScreen.main.bounds.width - 30))
+                                                if duration - with <= 1 && with != 0{next()}
                                             })
-                                          .onEnded({ (value) in
-                                          Timer =  Double(position) * Double(duration)
-                                          SAPlayer.shared.seekTo(seconds: Timer)
-                                          SAPlayer.shared.play()
-                                           }))
-                                    }
-                                    HStack (spacing: 15){
-                                        RemoteImage(type: .url(URL(string: i.Image.count == 1 ? i.Image[0] : i.Image[countMusik])!), errorView: { error in
-                                            Text(error.localizedDescription)
-                                        }, imageView: { image in
-                                            image
+                                                .onEnded({ (value) in
+                                                    Timer =  Double(position) * Double(duration)
+                                                    SAPlayer.shared.seekTo(seconds: Timer)
+                                                    SAPlayer.shared.play()
+                                                }))
+                                }
+                                HStack (spacing: 15){
+                                    RemoteImage(type: .url(URL(string: i.Image.count == 1 ? i.Image[0] : i.Image[countMusik])!), errorView: { error in
+                                        Text(error.localizedDescription)
+                                    }, imageView: { image in
+                                        image
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
-                                        }, loadingView: {
-                                            ProgressView()
-                                        }).frame(width:65,height:  65)
-                                VStack(alignment: .leading, spacing:3){
-                                    Text(i.NameTrack[countMusik]).foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/26))
-                                    Text(i.NameArtist[countMusik]).foregroundColor(Color(red: 179.0/255.0, green: 179.0/255.0, blue: 179.0/255.0))
-                                        .font(.system(size: UIScreen.main.bounds.width/28))
-                                }
-                                Spacer()
-//                                            Button(action: {DeledeAndAddMusik(ImageDrop: (i.Image.count != 1 ? i.Image[countMusik] : i.Image[0]), NameArtistDrop: i.NameArtist[countMusik], NameTrackDrop: i.NameTrack[countMusik], TextTrackDrop: i.TextTrack[countMusik], ssilkaDrop: i.ssilka[countMusik],countMusik: countMusik)
-//                                            }) {
-//                                                Image(systemName: loveTrack [countMusik] == 1 ? "suit.heart.fill" : "suit.heart").font(.system(size: 20, weight: .regular)).foregroundColor(loveTrack [countMusik] == 1 ? .green : .gray).padding(.trailing,5)
-//
-//
-//                                            }
-                                        Button(action: {
-                                            
-                                            seeAudioplay = false
-                                            SAPlayer.shared.clear()
-                                        }) {
-                                            Image(systemName: "delete.right.fill").font(.title).foregroundColor(.white).padding(.trailing,5)
-                                        }
-                                Button(action: {
-                                    stopORpause()
-                                    
-                                }) {
-                                    Image(systemName: self.playAndpausetogle ? "pause.fill" : "play.fill").font(.title).foregroundColor(.white).padding(.trailing,20)
-                                }
+                                    }, loadingView: {
+                                        ProgressView()
+                                    }).frame(width:65,height:  65)
+                                    VStack(alignment: .leading, spacing:3){
+                                        Text(i.NameTrack[countMusik]).foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/26))
+                                        Text(i.NameArtist[countMusik]).foregroundColor(Color(red: 179.0/255.0, green: 179.0/255.0, blue: 179.0/255.0))
+                                            .font(.system(size: UIScreen.main.bounds.width/28))
+                                    }
+                                    Spacer()
+                                    //                                            Button(action: {DeledeAndAddMusik(ImageDrop: (i.Image.count != 1 ? i.Image[countMusik] : i.Image[0]), NameArtistDrop: i.NameArtist[countMusik], NameTrackDrop: i.NameTrack[countMusik], TextTrackDrop: i.TextTrack[countMusik], ssilkaDrop: i.ssilka[countMusik],countMusik: countMusik)
+                                    //                                            }) {
+                                    //                                                Image(systemName: loveTrack [countMusik] == 1 ? "suit.heart.fill" : "suit.heart").font(.system(size: 20, weight: .regular)).foregroundColor(loveTrack [countMusik] == 1 ? .green : .gray).padding(.trailing,5)
+                                    //
+                                    //
+                                    //                                            }
+                                    Button(action: {
                                         
-                                }
-                                }
+                                        seeAudioplay = false
+                                        SAPlayer.shared.clear()
+                                    }) {
+                                        Image(systemName: "delete.right.fill").font(.title).foregroundColor(.white).padding(.trailing,5)
+                                    }
+                                    Button(action: {
+                                        stopORpause()
+                                        
+                                    }) {
+                                        Image(systemName: self.playAndpausetogle ? "pause.fill" : "play.fill").font(.title).foregroundColor(.white).padding(.trailing,20)
+                                    }
+                                    
                                 }
                             }
-                            if self.show{
-                                if self.showTextTrack{
-                                    ForEach(self.DataMedia.DataPlayListClick){ i in
-                                    ZStack (alignment: .top){
-                                        LinearGradient(gradient: Gradient(colors: [Color.init(red: Double(redGradient)/255.0, green:  Double(greenGradient)/255.0, blue:  Double(blueGradient)/255.0),Color.init(red: 0.0/255.0, green: 0.0/255.0, blue: 0.0/255.0)]), startPoint: .top, endPoint: .center).edgesIgnoringSafeArea(.all)
-                                        VStack{
+                        }
+                    }
+                    if self.show{
+                        if self.showTextTrack{
+                            ForEach(self.DataMedia.DataPlayListClick){ i in
+                                ZStack (alignment: .top){
+                                    LinearGradient(gradient: Gradient(colors: [Color.init(red: Double(redGradient)/255.0, green:  Double(greenGradient)/255.0, blue:  Double(blueGradient)/255.0),Color.init(red: 0.0/255.0, green: 0.0/255.0, blue: 0.0/255.0)]), startPoint: .top, endPoint: .center).edgesIgnoringSafeArea(.all)
+                                    VStack{
                                         ZStack{
                                             Button(action: {withAnimation{self.showTextTrack = false}}) {
                                                 Image(systemName: "chevron.left").foregroundColor(Color(red: 179.0/255.0, green: 179.0/255.0, blue: 179.0/255.0)).font(.system(size: UIScreen.main.bounds.width/18)).padding()
@@ -125,9 +125,9 @@ struct StreamingAudioforPlayList: View {
                                                     Text(error.localizedDescription)
                                                 }, imageView: { image in
                                                     image
-                                                    .resizable()
-                                                    .aspectRatio(contentMode: .fit)
-                                                    .cornerRadius(7)
+                                                        .resizable()
+                                                        .aspectRatio(contentMode: .fit)
+                                                        .cornerRadius(7)
                                                 }, loadingView: {
                                                     ProgressView()
                                                 }).frame(width:UIScreen.main.bounds.width/6, height:  UIScreen.main.bounds.width/6)
@@ -137,17 +137,17 @@ struct StreamingAudioforPlayList: View {
                                                 }
                                             }
                                         }.padding(.top,50)
-                                    ScrollView(.vertical, showsIndicators: false){
-                                        Text(TextTrack).foregroundColor(.white).fontWeight(.bold).font(.title).padding(.horizontal,20).padding(.bottom,20)
-                                    }.padding(.bottom,UIScreen.main.bounds.height/15).padding(.top,5)
+                                        ScrollView(.vertical, showsIndicators: false){
+                                            Text(TextTrack).foregroundColor(.white).fontWeight(.bold).font(.title).padding(.horizontal,20).padding(.bottom,20)
+                                        }.padding(.bottom,UIScreen.main.bounds.height/15).padding(.top,5)
                                     }
-                                     }.frame(width:UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 50, alignment: .center)
+                                }.frame(width:UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 50, alignment: .center)
                                 
-                                        
-                                }
-                                }
-                                else{
-                                    ForEach(self.DataMedia.DataPlayListClick){ i in
+                                
+                            }
+                        }
+                        else{
+                            ForEach(self.DataMedia.DataPlayListClick){ i in
                                 ZStack (alignment: .bottom){
                                     LinearGradient(gradient: Gradient(colors: [Color.init(red: Double(redGradient)/255.0, green:  Double(greenGradient)/255.0, blue:  Double(blueGradient)/255.0),Color.init(red: 0.0/255.0, green: 0.0/255.0, blue: 0.0/255.0)]), startPoint: .top, endPoint: .center).edgesIgnoringSafeArea(.all)
                                     
@@ -171,45 +171,45 @@ struct StreamingAudioforPlayList: View {
                                                 Text(error.localizedDescription)
                                             }, imageView: { image in
                                                 image
-                                                .resizable()
-                                                .aspectRatio(contentMode: .fit)
+                                                    .resizable()
+                                                    .aspectRatio(contentMode: .fit)
                                             }, loadingView: {
                                                 ProgressView()
                                             }).frame(width:UIScreen.main.bounds.width-40, height:  UIScreen.main.bounds.width-40).padding(.bottom,5)
-                                    .gesture(
-                                    DragGesture()
-                                    .onEnded({ value in
-                                        if value.translation.width < 0 && value.translation.height > -30 && value.translation.height < 30 {
-                                                //print("left swipe")
-                                               next()
-                                            }
-                                            else if value.translation.width > 0 && value.translation.height > -30 && value.translation.height < 30 {
-                                                //print("right swipe")
-                                                previos()
-                                            }
-                                        else if value.translation.height > 0 && value.translation.width < 150 && value.translation.width > -150 {
-                                                //print("down swipe")
-                                    self.show.toggle()
-                                    withAnimation {
-                                    self.offset = -(UIScreen.main.bounds.height * self.spacing) * CGFloat(self.index)
-                                                }
-                                        }
-                                        
-                                            })
-                                   )
+                                                .gesture(
+                                                    DragGesture()
+                                                        .onEnded({ value in
+                                                            if value.translation.width < 0 && value.translation.height > -30 && value.translation.height < 30 {
+                                                                //print("left swipe")
+                                                                next()
+                                                            }
+                                                            else if value.translation.width > 0 && value.translation.height > -30 && value.translation.height < 30 {
+                                                                //print("right swipe")
+                                                                previos()
+                                                            }
+                                                            else if value.translation.height > 0 && value.translation.width < 150 && value.translation.width > -150 {
+                                                                //print("down swipe")
+                                                                self.show.toggle()
+                                                                withAnimation {
+                                                                    self.offset = -(UIScreen.main.bounds.height * self.spacing) * CGFloat(self.index)
+                                                                }
+                                                            }
+                                                            
+                                                        })
+                                                )
                                         }
                                         VStack (alignment: .leading, spacing:5 ){
                                             HStack{
                                                 Text(i.NameTrack[countMusik]).fontWeight(.bold).foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/16)).padding(.leading,20)
                                                 Spacer()
-//                                                    Button(action: {DeledeAndAddMusik(ImageDrop: (i.Image.count != 1 ? i.Image[countMusik] : i.Image[0]), NameArtistDrop: i.NameArtist[countMusik], NameTrackDrop: i.NameTrack[countMusik], TextTrackDrop: i.TextTrack[countMusik], ssilkaDrop: i.ssilka[countMusik],countMusik: countMusik)
-//                                                    }) {
-//                                                        Image(systemName: loveTrack [countMusik] == 1 ? "suit.heart.fill" : "suit.heart").font(.system(size: 23, weight: .regular)).foregroundColor(loveTrack [countMusik] == 1 ? .green : .gray).padding(.trailing,20)
-//                                                    }
+                                                //                                                    Button(action: {DeledeAndAddMusik(ImageDrop: (i.Image.count != 1 ? i.Image[countMusik] : i.Image[0]), NameArtistDrop: i.NameArtist[countMusik], NameTrackDrop: i.NameTrack[countMusik], TextTrackDrop: i.TextTrack[countMusik], ssilkaDrop: i.ssilka[countMusik],countMusik: countMusik)
+                                                //                                                    }) {
+                                                //                                                        Image(systemName: loveTrack [countMusik] == 1 ? "suit.heart.fill" : "suit.heart").font(.system(size: 23, weight: .regular)).foregroundColor(loveTrack [countMusik] == 1 ? .green : .gray).padding(.trailing,20)
+                                                //                                                    }
                                             }
                                             HStack{
                                                 Text(i.NameArtist[countMusik]).fontWeight(.medium).foregroundColor(Color(red: 179.0/255.0, green: 179.0/255.0, blue: 179.0/255.0))
-                                                .font(.system(size: UIScreen.main.bounds.width/20)).padding(.leading,20)
+                                                    .font(.system(size: UIScreen.main.bounds.width/20)).padding(.leading,20)
                                                 Spacer()
                                             }
                                         }
@@ -230,12 +230,12 @@ struct StreamingAudioforPlayList: View {
                                                         
                                                         
                                                     })
-                                                    .onEnded({ (value) in
-                                                        
-                                                        Timer =  Double(position) * Double(duration)
-                                                        SAPlayer.shared.seekTo(seconds: Timer)
-                                                        SAPlayer.shared.play()
-                                                    }))
+                                                        .onEnded({ (value) in
+                                                            
+                                                            Timer =  Double(position) * Double(duration)
+                                                            SAPlayer.shared.seekTo(seconds: Timer)
+                                                            SAPlayer.shared.play()
+                                                        }))
                                         }.padding(.top,5).padding(.horizontal,20)
                                         HStack{
                                             Text(time.dropFirst(2)).foregroundColor(Color(red: 179.0/255.0, green: 179.0/255.0, blue: 179.0/255.0)).font(.system(size: UIScreen.main.bounds.width/27)).padding(.leading,20)
@@ -244,7 +244,7 @@ struct StreamingAudioforPlayList: View {
                                         }
                                         HStack(){
                                             Button(action: {
-                                               previos()
+                                                previos()
                                             }) {
                                                 Image(systemName: "backward.end.fill").foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/11))
                                             }
@@ -254,122 +254,122 @@ struct StreamingAudioforPlayList: View {
                                                 Image(systemName: self.playAndpausetogle ? "pause.circle.fill" : "play.circle.fill").foregroundColor(.white).padding().padding(.horizontal,10).font(.system(size: UIScreen.main.bounds.width/7))
                                             }
                                             Button(action: {
-                                               next()
+                                                next()
                                             }) {
                                                 Image(systemName: "forward.end.fill").foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/11))
                                             }
                                             
                                         }
                                         HStack{
-                                        Button(action: {
-                                            withAnimation{
-                                            visibleModifyEclavaizer = false
-                                            visibleModify.toggle()
-                                            }
-                                        }) {
-                                            Image(systemName: "slider.vertical.3").foregroundColor(visibleModify == false ? .white : .green).font(.system(size: UIScreen.main.bounds.width/15)).padding(.leading,20)
-                                        }
-                                        Spacer()
                                             Button(action: {
                                                 withAnimation{
-                                                visibleModify = false
-                                                visibleModifyEclavaizer.toggle()
+                                                    visibleModifyEclavaizer = false
+                                                    visibleModify.toggle()
+                                                }
+                                            }) {
+                                                Image(systemName: "slider.vertical.3").foregroundColor(visibleModify == false ? .white : .green).font(.system(size: UIScreen.main.bounds.width/15)).padding(.leading,20)
+                                            }
+                                            Spacer()
+                                            Button(action: {
+                                                withAnimation{
+                                                    visibleModify = false
+                                                    visibleModifyEclavaizer.toggle()
                                                 }
                                             }) {
                                                 Image(systemName: "hifispeaker.2.fill").foregroundColor(visibleModifyEclavaizer == false ? .white : .green).font(.system(size: UIScreen.main.bounds.width/15)).padding(.trailing,20)
                                             }
                                         }
                                         if visibleModify == true {
-                                        VStack{
-                                            HStack{
-                                                Text("Ускорить аудио").fontWeight(.medium).foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/25)).padding(.leading,20).padding(.top,3)
-                                                Spacer()
-                                            }
-                                            Slider(value: $valueSpeed).padding(.horizontal).foregroundColor(.red).onChange(of: valueSpeed, perform: { value in
-                                            valueSpeed2 = 0
-                                            let speed = valueSpeed + 1
-                                            if let node = SAPlayer.shared.audioModifiers[0] as? AVAudioUnitTimePitch {
-                                                node.rate = Float(speed)
-                                                SAPlayer.shared.playbackRateOfAudioChanged(rate: Float(speed))
-                                            }
-                                        })
-                                            HStack{
-                                                Text("Замедлить аудио").fontWeight(.medium).foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/25)).padding(.leading,20).padding(.top,3)
-                                                Spacer()
-                                            }
-                                            Slider(value: $valueSpeed2).padding(.horizontal).foregroundColor(.red).onChange(of: valueSpeed2, perform: { value in
-                                                valueSpeed = 0
-                                                let speed = 1 - valueSpeed2
-                                                if let node = SAPlayer.shared.audioModifiers[0] as? AVAudioUnitTimePitch {
-                                                    node.rate = Float(speed)
-                                                    SAPlayer.shared.playbackRateOfAudioChanged(rate: Float(speed))
+                                            VStack{
+                                                HStack{
+                                                    Text("Ускорить аудио").fontWeight(.medium).foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/25)).padding(.leading,20).padding(.top,3)
+                                                    Spacer()
                                                 }
-                                            })
-                                        }
+                                                Slider(value: $valueSpeed).padding(.horizontal).foregroundColor(.red).onChange(of: valueSpeed, perform: { value in
+                                                    valueSpeed2 = 0
+                                                    let speed = valueSpeed + 1
+                                                    if let node = SAPlayer.shared.audioModifiers[0] as? AVAudioUnitTimePitch {
+                                                        node.rate = Float(speed)
+                                                        SAPlayer.shared.playbackRateOfAudioChanged(rate: Float(speed))
+                                                    }
+                                                })
+                                                HStack{
+                                                    Text("Замедлить аудио").fontWeight(.medium).foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/25)).padding(.leading,20).padding(.top,3)
+                                                    Spacer()
+                                                }
+                                                Slider(value: $valueSpeed2).padding(.horizontal).foregroundColor(.red).onChange(of: valueSpeed2, perform: { value in
+                                                    valueSpeed = 0
+                                                    let speed = 1 - valueSpeed2
+                                                    if let node = SAPlayer.shared.audioModifiers[0] as? AVAudioUnitTimePitch {
+                                                        node.rate = Float(speed)
+                                                        SAPlayer.shared.playbackRateOfAudioChanged(rate: Float(speed))
+                                                    }
+                                                })
+                                            }
                                         }
                                         if visibleModifyEclavaizer == true {
-                                        VStack{
-                                            HStack{
-                                                Text("Эквалайзер").fontWeight(.medium).foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/25)).padding(.leading,20).padding(.top,3)
-                                                Spacer()
-                                            }
-                                            Slider(value: $valueSpeed3).padding(.horizontal).foregroundColor(.red).onChange(of: valueSpeed3, perform: { value in
-                                                let reverb = valueSpeed3 * 500
-                                                if let node = SAPlayer.shared.audioModifiers[1] as? AVAudioUnitReverb {
-                                                    node.wetDryMix = Float(reverb)
+                                            VStack{
+                                                HStack{
+                                                    Text("Эквалайзер").fontWeight(.medium).foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/25)).padding(.leading,20).padding(.top,3)
+                                                    Spacer()
                                                 }
-                                            })
+                                                Slider(value: $valueSpeed3).padding(.horizontal).foregroundColor(.red).onChange(of: valueSpeed3, perform: { value in
+                                                    let reverb = valueSpeed3 * 500
+                                                    if let node = SAPlayer.shared.audioModifiers[1] as? AVAudioUnitReverb {
+                                                        node.wetDryMix = Float(reverb)
+                                                    }
+                                                })
+                                            }
                                         }
-                                        }
-                                           
+                                        
                                     }.padding(.bottom,UIScreen.main.bounds.height/6)
                                     
                                 }.frame(width:UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 40, alignment: .center)
-                                }
-                                }
-                            }
-                                
-                        }.background(Color(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0)).edgesIgnoringSafeArea(.all)
-                        .onTapGesture {
-                            withAnimation(Animation.default){
-                                if !self.show{
-                                    visibleModifyEclavaizer = false
-                                    visibleModify = false
-                                self.show.toggle()
-                                }
                             }
                         }
-                        .gesture(
-                        DragGesture()
-                        .onEnded({ value in
-                            
-                            if self.show{
-                                if value.translation.height > 0 && value.translation.width < 100 && value.translation.width > -100 {
-                                        //print("down swipe")
-                            self.show.toggle()
-                            withAnimation {
-                            self.offset = -(UIScreen.main.bounds.height * self.spacing) * CGFloat(self.index)
-                                        }
-                                }
-                            }
+                    }
+                    
+                }.background(Color(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0)).edgesIgnoringSafeArea(.all)
+                    .onTapGesture {
+                        withAnimation(Animation.default){
                             if !self.show{
-                                if value.translation.width < 0 && value.translation.height > -30 && value.translation.height < 30 {
+                                visibleModifyEclavaizer = false
+                                visibleModify = false
+                                self.show.toggle()
+                            }
+                        }
+                    }
+                    .gesture(
+                        DragGesture()
+                            .onEnded({ value in
+                                
+                                if self.show{
+                                    if value.translation.height > 0 && value.translation.width < 100 && value.translation.width > -100 {
+                                        //print("down swipe")
+                                        self.show.toggle()
+                                        withAnimation {
+                                            self.offset = -(UIScreen.main.bounds.height * self.spacing) * CGFloat(self.index)
+                                        }
+                                    }
+                                }
+                                if !self.show{
+                                    if value.translation.width < 0 && value.translation.height > -30 && value.translation.height < 30 {
                                         //print("left swipe")
-                                       next()
+                                        next()
                                     }
                                     else if value.translation.width > 0 && value.translation.height > -30 && value.translation.height < 30 {
                                         //print("right swipe")
                                         previos()
                                     }
-                            }
-                                })
-                       )
-                            
-                        
-                    }.onAppear{
-                    SAPlayer.shared.DEBUG_MODE = true
-                        addRandomModifiers()
-                        for i in DataMedia.DataPlayListClick {
+                                }
+                            })
+                    )
+                
+                
+            }.onAppear{
+                SAPlayer.shared.DEBUG_MODE = true
+                addRandomModifiers()
+                for i in DataMedia.DataPlayListClick {
                     if boolNextAuido{
                         SAPlayer.shared.stopStreamingRemoteAudio()
                         SAPlayer.shared.startRemoteAudio(withRemoteUrl: URL(string: i.ssilka[countMusik])!)
@@ -393,39 +393,39 @@ struct StreamingAudioforPlayList: View {
                         if self.duration == 0.0 { return }
                         self.progress = Float(playing.bufferingProgress)
                     })
-                        }
                 }
-                .onChange(of: boolNextAuido, perform: { value in
-                    if boolNextAuido {
-                        SAPlayer.shared.stopStreamingRemoteAudio()
-                        for i in DataMedia.DataPlayListClick {
-                        SAPlayer.shared.startRemoteAudio(withRemoteUrl: URL(string: i.ssilka[countMusik])!)
-                        }
-                        SAPlayer.shared.play()
-                        boolNextAuido = false
-                    }
-                })
             }
+            .onChange(of: boolNextAuido, perform: { value in
+                if boolNextAuido {
+                    SAPlayer.shared.stopStreamingRemoteAudio()
+                    for i in DataMedia.DataPlayListClick {
+                        SAPlayer.shared.startRemoteAudio(withRemoteUrl: URL(string: i.ssilka[countMusik])!)
+                    }
+                    SAPlayer.shared.play()
+                    boolNextAuido = false
+                }
+            })
+        }
     }
     func addRandomModifiers() {
         let node = AVAudioUnitReverb()
         SAPlayer.shared.audioModifiers.append(node)
         node.wetDryMix = 0
     }
-
+    
     func next(){
         for i in DataMedia.DataPlayListClick {
-        if countMusik < i.ssilka.count-1{
-        SAPlayer.shared.stopStreamingRemoteAudio()
-        countMusik += 1
-        
-        SAPlayer.shared.startRemoteAudio(withRemoteUrl: URL(string:  i.ssilka[countMusik])!)
-        SAPlayer.shared.play()
-            self.playAndpausetogle = true
-            redGradient = Int.random(in: 0...255)
-            greenGradient = Int.random(in: 0...255)
-            blueGradient = Int.random(in: 0...255)
-        }
+            if countMusik < i.ssilka.count-1{
+                SAPlayer.shared.stopStreamingRemoteAudio()
+                countMusik += 1
+                
+                SAPlayer.shared.startRemoteAudio(withRemoteUrl: URL(string:  i.ssilka[countMusik])!)
+                SAPlayer.shared.play()
+                self.playAndpausetogle = true
+                redGradient = Int.random(in: 0...255)
+                greenGradient = Int.random(in: 0...255)
+                blueGradient = Int.random(in: 0...255)
+            }
         }
     }
     func previos(){
@@ -439,30 +439,30 @@ struct StreamingAudioforPlayList: View {
                 SAPlayer.shared.play()
             }
             else {
-        if countMusik > 0 {
-            SAPlayer.shared.stopStreamingRemoteAudio()
-            if  with <= 3.0  {
-        countMusik -= 1
-            self.playAndpausetogle = true
-        }
-            redGradient = Int.random(in: 0...255)
-            greenGradient = Int.random(in: 0...255)
-            blueGradient = Int.random(in: 0...255)
-            SAPlayer.shared.startRemoteAudio(withRemoteUrl: URL(string: i.ssilka[countMusik])!)
-            SAPlayer.shared.play()
-        }
-        }
+                if countMusik > 0 {
+                    SAPlayer.shared.stopStreamingRemoteAudio()
+                    if  with <= 3.0  {
+                        countMusik -= 1
+                        self.playAndpausetogle = true
+                    }
+                    redGradient = Int.random(in: 0...255)
+                    greenGradient = Int.random(in: 0...255)
+                    blueGradient = Int.random(in: 0...255)
+                    SAPlayer.shared.startRemoteAudio(withRemoteUrl: URL(string: i.ssilka[countMusik])!)
+                    SAPlayer.shared.play()
+                }
+            }
         }
     }
     func stopORpause(){
         if !playAndpausetogle{
-        if !stop{
-            SAPlayer.shared.stopStreamingRemoteAudio()
-            for i in DataMedia.DataPlayListClick{
-            SAPlayer.shared.startRemoteAudio(withRemoteUrl: URL(string: i.ssilka[countMusik])!)
+            if !stop{
+                SAPlayer.shared.stopStreamingRemoteAudio()
+                for i in DataMedia.DataPlayListClick{
+                    SAPlayer.shared.startRemoteAudio(withRemoteUrl: URL(string: i.ssilka[countMusik])!)
+                }
+                stop = true
             }
-            stop = true
-        }
             SAPlayer.shared.play()
             playAndpausetogle = true
         }
@@ -475,65 +475,65 @@ struct StreamingAudioforPlayList: View {
     }
     func download(){
         for i in DataMedia.DataPlayListClick {
-        if !isDownloading {
-           if let savedUrl = SAPlayer.Downloader.getSavedUrl(forRemoteUrl: URL(string: i.ssilka[countMusik])!) {
-                SAPlayer.Downloader.deleteDownloaded(withSavedUrl: savedUrl)
-                isDownloading = false
+            if !isDownloading {
+                if let savedUrl = SAPlayer.Downloader.getSavedUrl(forRemoteUrl: URL(string: i.ssilka[countMusik])!) {
+                    SAPlayer.Downloader.deleteDownloaded(withSavedUrl: savedUrl)
+                    isDownloading = false
+                } else {
+                    isDownloading = true
+                    SAPlayer.Downloader.downloadAudio(withRemoteUrl: URL(string: i.ssilka[countMusik])!, completion: {  url in
+                        DispatchQueue.main.async {
+                            //self.currentUrlLocationLabel.text = "saved to: \(url.lastPathComponent)"
+                            try! safeURL[countMusik] = String(contentsOf: url)
+                            
+                            SAPlayer.shared.startSavedAudio(withSavedUrl: url)
+                        }
+                    })
+                }
             } else {
-                isDownloading = true
-                SAPlayer.Downloader.downloadAudio(withRemoteUrl: URL(string: i.ssilka[countMusik])!, completion: {  url in
-                    DispatchQueue.main.async {
-                        //self.currentUrlLocationLabel.text = "saved to: \(url.lastPathComponent)"
-                        try! safeURL[countMusik] = String(contentsOf: url)
-                        
-                        SAPlayer.shared.startSavedAudio(withSavedUrl: url)
-                    }
-                })
+                SAPlayer.Downloader.cancelDownload(withRemoteUrl: URL(string: i.ssilka[countMusik])!)
+                isDownloading = false
             }
-        } else {
-            SAPlayer.Downloader.cancelDownload(withRemoteUrl: URL(string: i.ssilka[countMusik])!)
-            isDownloading = false
-        }
         }
     }
     func textMusik(text : String, countTrack: Int){
         if text.first != "\n"{
-        var items = text.components(separatedBy: " ")
-        var stroka = ""
-        items[0] += "\n"
-        for i in 0..<items.count{
-            if (items[i].firstIndex(of: "[") != nil && items[i+1].lastIndex(of: "]") != nil){
-                items[i] = "\n" + items[i] + items[i+1]
-                items[i+1] = ""
-            }
-            else if  (items[i].firstIndex(of: "\"") != nil){
-                if (items[i].lastIndex(of: "\"") != nil){
-                    items[i] = ""
+            var items = text.components(separatedBy: " ")
+            var stroka = ""
+            items[0] += "\n"
+            for i in 0..<items.count{
+                if (items[i].firstIndex(of: "[") != nil && items[i+1].lastIndex(of: "]") != nil){
+                    items[i] = "\n" + items[i] + items[i+1]
+                    items[i+1] = ""
                 }
-                else {
-                for g in i..<items.count{
-                    if items[g].lastIndex(of:  "\"") != nil
-                    {
+                else if  (items[i].firstIndex(of: "\"") != nil){
+                    if (items[i].lastIndex(of: "\"") != nil){
                         items[i] = ""
                     }
                     else {
-                        items[i] += items[g]
+                        for g in i..<items.count{
+                            if items[g].lastIndex(of:  "\"") != nil
+                            {
+                                items[i] = ""
+                            }
+                            else {
+                                items[i] += items[g]
+                            }
+                        }
                     }
                 }
+                else if (items[i] == items[i].capitalized && items[i] != "—" && i != 0){
+                    items[i] =  "\n" + "\n" +  items[i] + " "
                 }
-            }
-           else if (items[i] == items[i].capitalized && items[i] != "—" && i != 0){
-                items[i] =  "\n" + "\n" +  items[i] + " "
-            }
-            else {
-                if items[i] != ""{
-                items[i] += " "
+                else {
+                    if items[i] != ""{
+                        items[i] += " "
+                    }
                 }
+                stroka += items[i]
             }
-            stroka += items[i]
+            TextTrack = stroka
         }
-        TextTrack = stroka
-    }
     }
 }
 

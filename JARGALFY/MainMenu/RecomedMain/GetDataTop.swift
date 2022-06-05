@@ -138,20 +138,20 @@ class Searchhistory : ObservableObject{
         if let user = user {
             let uid = user.uid
             db.collection("users").document(uid).collection("Search").addSnapshotListener { (snap, err) in
-            
-            if err != nil{
                 
-                print((err?.localizedDescription)!)
-                return
-            }
-            for i in snap!.documentChanges{
-                if i.type == .added{
-                    let id = i.document.documentID
-                    let NameArtist = i.document.get("nameArtist") as! Array<String>
-                    let NameTrack = i.document.get("NameTrack") as! Array<String>
-                    self.Search.append(SearchHistory(id: id, NameArtist: NameArtist, NameTrack: NameTrack))
+                if err != nil{
+                    
+                    print((err?.localizedDescription)!)
+                    return
                 }
-            }
+                for i in snap!.documentChanges{
+                    if i.type == .added{
+                        let id = i.document.documentID
+                        let NameArtist = i.document.get("nameArtist") as! Array<String>
+                        let NameTrack = i.document.get("NameTrack") as! Array<String>
+                        self.Search.append(SearchHistory(id: id, NameArtist: NameArtist, NameTrack: NameTrack))
+                    }
+                }
             }
         }
     }
@@ -172,7 +172,7 @@ class NewSong : ObservableObject{
         self.documents2 = documents2
         self.collection3 = collection3
         UPDATE(collection1: collection1, documents1: documents1, collection2: collection2, documents2: documents2, collection3: collection3)
-            }
+    }
     func UPDATE(collection1: String,documents1: String,collection2: String,documents2: String,collection3: String ){
         let db = Firestore.firestore()
         db.collection(collection1).document(documents1).collection(collection2).document(documents2).collection(collection3).addSnapshotListener { (snap, err) in
@@ -210,21 +210,21 @@ class PlayListData : ObservableObject{
         if let user = user {
             let uid = user.uid
             db.collection("users").document(uid).collection("usersList").addSnapshotListener { (snap, err) in
-            
-            if err != nil{
                 
-                print((err?.localizedDescription)!)
-                return
-            }
-            for i in snap!.documentChanges{
-                self.DataPlayList.removeAll()
-                if i.type == .added{
-                    let id = i.document.documentID
-                    let CountTrack = i.document.get("CountTrack") as! Array<Int>
-                    let MassPlayList = i.document.get("MassPlayList") as! Array<String>
-                    self.DataPlayList.append(PlayListUserArray(id: id, countTrack: CountTrack, MassPlayList: MassPlayList))
+                if err != nil{
+                    
+                    print((err?.localizedDescription)!)
+                    return
                 }
-            }
+                for i in snap!.documentChanges{
+                    self.DataPlayList.removeAll()
+                    if i.type == .added{
+                        let id = i.document.documentID
+                        let CountTrack = i.document.get("CountTrack") as! Array<Int>
+                        let MassPlayList = i.document.get("MassPlayList") as! Array<String>
+                        self.DataPlayList.append(PlayListUserArray(id: id, countTrack: CountTrack, MassPlayList: MassPlayList))
+                    }
+                }
             }
         }
     }
@@ -243,33 +243,33 @@ class PlayListDataClick : ObservableObject{
         let user = Auth.auth().currentUser
         if let user = user {
             let uid = user.uid
-        db.collection("users").document(uid).collection("PlaylistUser").document(NamePlayList).collection(NamePlayList).addSnapshotListener { (snap, err) in
-            
-            if err != nil{
+            db.collection("users").document(uid).collection("PlaylistUser").document(NamePlayList).collection(NamePlayList).addSnapshotListener { (snap, err) in
                 
-                print((err?.localizedDescription)!)
-                return
-            }
-            else {
-                self.DataPlayListClick.removeAll()
-            }
-            for i in snap!.documentChanges{
-                if i.type == .added{
-                    let id = i.document.documentID
-                    let Image = i.document.get("Image") as! Array<String>
-                    let NameArtist = i.document.get("NameArtist") as! Array<String>
-                    let NamePlayList = i.document.get("NamePlayList") as! String
-                    let NameTrack = i.document.get("NameTrack") as! Array<String>
-                    let TextTrack = i.document.get("TextTrack") as! Array<String>
-                    let ssilka = i.document.get("ssilka") as! Array<String>
-                    self.DataPlayListClick.append(PlayListUserArrayClick(id: id, Image: Image, NameArtist: NameArtist, NameTrack: NameTrack, ssilka: ssilka, TextTrack: TextTrack, NamePlayList: NamePlayList))
+                if err != nil{
+                    
+                    print((err?.localizedDescription)!)
+                    return
+                }
+                else {
+                    self.DataPlayListClick.removeAll()
+                }
+                for i in snap!.documentChanges{
+                    if i.type == .added{
+                        let id = i.document.documentID
+                        let Image = i.document.get("Image") as! Array<String>
+                        let NameArtist = i.document.get("NameArtist") as! Array<String>
+                        let NamePlayList = i.document.get("NamePlayList") as! String
+                        let NameTrack = i.document.get("NameTrack") as! Array<String>
+                        let TextTrack = i.document.get("TextTrack") as! Array<String>
+                        let ssilka = i.document.get("ssilka") as! Array<String>
+                        self.DataPlayListClick.append(PlayListUserArrayClick(id: id, Image: Image, NameArtist: NameArtist, NameTrack: NameTrack, ssilka: ssilka, TextTrack: TextTrack, NamePlayList: NamePlayList))
+                    }
                 }
             }
-            }
+            
+        }
         
     }
-    
-}
 }
 class MyLoveMedia : ObservableObject{
     
@@ -280,23 +280,23 @@ class MyLoveMedia : ObservableObject{
         if let user = user {
             let uid = user.uid
             db.collection("users").document(uid).collection("MyMusik").addSnapshotListener { (snap, err) in
-            
-            if err != nil{
                 
-                print((err?.localizedDescription)!)
-                return
-            }
-            for i in snap!.documentChanges{
-                if i.type == .added{
-                    let id = i.document.documentID
-                    let Image = i.document.get("Image") as! Array<String>
-                    let NameArtist = i.document.get("NameArtist") as! Array<String>
-                    let NameTrack = i.document.get("NameTrack") as! Array<String>
-                    let TextTrack = i.document.get("TextTrack") as! Array<String>
-                    let ssilka = i.document.get("ssilka") as! Array<String>
-                    self.MediaData.append(MediaTeack(id: id, Image: Image, NameArtist: NameArtist, NameTrack: NameTrack, ssilka: ssilka, TextTrack: TextTrack))
+                if err != nil{
+                    
+                    print((err?.localizedDescription)!)
+                    return
                 }
-            }
+                for i in snap!.documentChanges{
+                    if i.type == .added{
+                        let id = i.document.documentID
+                        let Image = i.document.get("Image") as! Array<String>
+                        let NameArtist = i.document.get("NameArtist") as! Array<String>
+                        let NameTrack = i.document.get("NameTrack") as! Array<String>
+                        let TextTrack = i.document.get("TextTrack") as! Array<String>
+                        let ssilka = i.document.get("ssilka") as! Array<String>
+                        self.MediaData.append(MediaTeack(id: id, Image: Image, NameArtist: NameArtist, NameTrack: NameTrack, ssilka: ssilka, TextTrack: TextTrack))
+                    }
+                }
             }
         }
     }

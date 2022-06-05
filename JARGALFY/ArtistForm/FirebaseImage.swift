@@ -18,7 +18,7 @@ struct FirebaseImageView: View {
     let rect = CGRect(x: 0, y: 0, width: 100, height: 100)
     var body: some View {
         VStack {
-           
+            
             Image(uiImage: image)
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -37,7 +37,7 @@ class DataLoader: ObservableObject {
             didChange.send(data)
         }
     }
-
+    
     init(urlString:String) {
         getDataFromURL(urlString: urlString)
     }

@@ -42,7 +42,7 @@ struct PlayList: View {
     let db = Firestore.firestore()
     func OpenPlayList(index: Int ){
         if let user = user {
-          let uid = user.uid
+            let uid = user.uid
             db.collection("users").document(uid).collection("usersList").addSnapshotListener { (snap, err) in
                 
                 if err != nil{
@@ -91,118 +91,118 @@ struct PlayList: View {
     }
     var body: some View {
         ZStack{
-        ZStack (alignment: . top){
-            // Color(red: 18.0/255.0, green: 18.0/255.0, blue: 18.0/255.0).edgesIgnoringSafeArea(.all)
-        VStack{
-            HStack{
-                Text("Музыка").fontWeight(.bold).font(.system(size:UIScreen.main.bounds.width/12)).foregroundColor(.white).padding(.leading).padding(.top,10)
-                Spacer()
-            }
-            HStack{
-                Text("Плейлисты").fontWeight(.bold).font(.system(size:UIScreen.main.bounds.width/20)).foregroundColor(.white).padding(.leading).padding(.top,10)
-                Spacer()
-            }
-            HStack{
-            HStack{
-                HStack {
-                    Image(systemName: "magnifyingglass").font(.system(size: UIScreen.main.bounds.width/14, weight: .regular)).foregroundColor(Color(red: 179.0/255.0, green: 179.0/255.0, blue: 179.0/255.0))
-                    Button(action: {seeTabBar.toggle()}){
-                    ZStack(alignment: .leading) {
-                        
-                            if searchPlaylist.isEmpty {
-                                Text("Поиск по плейлистам")
-                                    .foregroundColor(.white).multilineTextAlignment(.leading).foregroundColor(.black).font(.system(size: UIScreen.main.bounds.width/23, weight: .regular))
-                            }
-                        TextField("", text: $searchPlaylist).multilineTextAlignment(.leading).foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/23, weight: .regular))
-                    }
-                    }
-                }.padding(.horizontal).padding(.vertical,6)
-            }.background( RoundedRectangle( cornerRadius: 10).fill(Color(red: 40.0/255.0, green: 40.0/255.0, blue: 40.0/255.0))).padding(.leading)
-            .padding(.vertical,10)
-                Button(action: {
-                    if searchPlaylist != "" {
-                        searchPlaylist = ""
-                        seeTabBar.toggle()
-                    }
-                    else{
-                        searchPlaylist = ""
-                    }
-                    if seeTabBar == false {
-                        seeTabBar = true
-                    }
-                }) {
+            ZStack (alignment: . top){
+                // Color(red: 18.0/255.0, green: 18.0/255.0, blue: 18.0/255.0).edgesIgnoringSafeArea(.all)
+                VStack{
                     HStack{
-                        Text("Отмена").foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/23, weight: .regular)).padding(.horizontal).padding(.vertical,9)
-                    }.background( RoundedRectangle( cornerRadius: 10).fill(Color(red: 40.0/255.0, green: 40.0/255.0, blue: 40.0/255.0))).padding(.trailing)
-                    .padding(.vertical,10)
-                }
-            }
-            ScrollView(.vertical, showsIndicators: true) {
-            Button(action: {createshowPlayList.toggle()
-                seeTabBar.toggle()
-            })
-            {
-                HStack{
-                HStack{
-                    Text("+").fontWeight(.ultraLight).padding(.init(top: 20, leading: 30, bottom: 20, trailing: 30)).font(.system(size:UIScreen.main.bounds.width/10)).foregroundColor(.white).background(Rectangle().fill(Color(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0)).frame(width: 70, height: 70))
-                }.padding(.leading).padding(.top,10)
-                    Text("Создать плейлист").fontWeight(.bold).font(.system(size:UIScreen.main.bounds.width/23)).foregroundColor(.white)
-                    Spacer()
-                }
-            }
-                if searchPlaylist.isEmpty {
-            if self.DataBasePlayList.DataPlayList.count != 0{
-            ForEach(self.DataBasePlayList.DataPlayList){ i in
-                ForEach(0..<i.MassPlayList.count, id: \.self) { index in
-                    Button(action: {
-                        OpenPlayList(index: index)
-                    }) {
+                        Text("Музыка").fontWeight(.bold).font(.system(size:UIScreen.main.bounds.width/12)).foregroundColor(.white).padding(.leading).padding(.top,10)
+                        Spacer()
+                    }
+                    HStack{
+                        Text("Плейлисты").fontWeight(.bold).font(.system(size:UIScreen.main.bounds.width/20)).foregroundColor(.white).padding(.leading).padding(.top,10)
+                        Spacer()
+                    }
+                    HStack{
                         HStack{
-                        HStack{
-                            Image(systemName: index == 0 ? "heart.fill" : "iphone.badge.play" ).padding(.init(top: 20, leading: 28, bottom: 20, trailing: 28)).font(.system(size:UIScreen.main.bounds.width/15)).foregroundColor(index == 0 ? .white : .purple).background(Rectangle().fill(RadialGradient(gradient: Gradient(colors: [index == 0 ? .green : .black, index == 0 ? .black : .gray]), center: .center, startRadius: 0, endRadius: 85)).frame(width: 70, height: 70))
-                        }.padding(.leading, index == 0 ? 15 : 19).padding(.top,10)
-                            VStack (alignment: .leading){
-                                Text(i.MassPlayList[index] != "MyLoveTrack" ? i.MassPlayList[index] : "Мои любимые треки").fontWeight(.bold).font(.system(size:UIScreen.main.bounds.width/23)).foregroundColor(.white)
-                                Text("\(i.countTrack[index]) треков").font(.system(size:UIScreen.main.bounds.width/28)).foregroundColor(Color(red: 150.0/255.0, green: 150.0/255.0, blue: 150.0/255.0))
+                            HStack {
+                                Image(systemName: "magnifyingglass").font(.system(size: UIScreen.main.bounds.width/14, weight: .regular)).foregroundColor(Color(red: 179.0/255.0, green: 179.0/255.0, blue: 179.0/255.0))
+                                Button(action: {seeTabBar.toggle()}){
+                                    ZStack(alignment: .leading) {
+                                        
+                                        if searchPlaylist.isEmpty {
+                                            Text("Поиск по плейлистам")
+                                                .foregroundColor(.white).multilineTextAlignment(.leading).foregroundColor(.black).font(.system(size: UIScreen.main.bounds.width/23, weight: .regular))
+                                        }
+                                        TextField("", text: $searchPlaylist).multilineTextAlignment(.leading).foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/23, weight: .regular))
+                                    }
+                                }
+                            }.padding(.horizontal).padding(.vertical,6)
+                        }.background( RoundedRectangle( cornerRadius: 10).fill(Color(red: 40.0/255.0, green: 40.0/255.0, blue: 40.0/255.0))).padding(.leading)
+                            .padding(.vertical,10)
+                        Button(action: {
+                            if searchPlaylist != "" {
+                                searchPlaylist = ""
+                                seeTabBar.toggle()
                             }
-                            Spacer()
+                            else{
+                                searchPlaylist = ""
+                            }
+                            if seeTabBar == false {
+                                seeTabBar = true
+                            }
+                        }) {
+                            HStack{
+                                Text("Отмена").foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/23, weight: .regular)).padding(.horizontal).padding(.vertical,9)
+                            }.background( RoundedRectangle( cornerRadius: 10).fill(Color(red: 40.0/255.0, green: 40.0/255.0, blue: 40.0/255.0))).padding(.trailing)
+                                .padding(.vertical,10)
                         }
                     }
-                }
-            }
-            }
-                }
-            else {
-                ForEach(self.DataBasePlayList.DataPlayList){ i in
-                ForEach(i.MassPlayList.filter{$0.hasPrefix(searchPlaylist) || searchPlaylist == ""} , id: \.self) { resultpoisk in
-                    ForEach(i.MassPlayList.indices,id: \.self){
-                        index in
-                        if (i.MassPlayList[index] != "MyLoveTrack" ? i.MassPlayList[index] : "Мои любимые треки").uppercased() == resultpoisk.uppercased() {
-                            Button(action: {
-                                OpenPlayList(index: index)
-                            }) {
+                    ScrollView(.vertical, showsIndicators: true) {
+                        Button(action: {createshowPlayList.toggle()
+                            seeTabBar.toggle()
+                        })
+                        {
+                            HStack{
                                 HStack{
-                                HStack{
-                                    Image(systemName: index == 0 ? "heart.fill" : "person" ).padding(.init(top: 20, leading: 28, bottom: 20, trailing: 28)).font(.system(size:UIScreen.main.bounds.width/15)).foregroundColor(.white).background(Rectangle().fill(RadialGradient(gradient: Gradient(colors: [.green, .black]), center: .center, startRadius: 0, endRadius: 85)).frame(width: 70, height: 70))
-                                }.padding(.leading).padding(.bottom,10)
-                                    VStack (alignment: .leading){
-                                        Text(i.MassPlayList[index] != "MyLoveTrack" ? i.MassPlayList[index] : "Мои любимые треки").fontWeight(.bold).font(.system(size:UIScreen.main.bounds.width/23)).foregroundColor(.white)
-                                        Text("\(i.countTrack[index]) треков").font(.system(size:UIScreen.main.bounds.width/28)).foregroundColor(Color(red: 150.0/255.0, green: 150.0/255.0, blue: 150.0/255.0))
+                                    Text("+").fontWeight(.ultraLight).padding(.init(top: 20, leading: 30, bottom: 20, trailing: 30)).font(.system(size:UIScreen.main.bounds.width/10)).foregroundColor(.white).background(Rectangle().fill(Color(red: 30.0/255.0, green: 30.0/255.0, blue: 30.0/255.0)).frame(width: 70, height: 70))
+                                }.padding(.leading).padding(.top,10)
+                                Text("Создать плейлист").fontWeight(.bold).font(.system(size:UIScreen.main.bounds.width/23)).foregroundColor(.white)
+                                Spacer()
+                            }
+                        }
+                        if searchPlaylist.isEmpty {
+                            if self.DataBasePlayList.DataPlayList.count != 0{
+                                ForEach(self.DataBasePlayList.DataPlayList){ i in
+                                    ForEach(0..<i.MassPlayList.count, id: \.self) { index in
+                                        Button(action: {
+                                            OpenPlayList(index: index)
+                                        }) {
+                                            HStack{
+                                                HStack{
+                                                    Image(systemName: index == 0 ? "heart.fill" : "iphone.badge.play" ).padding(.init(top: 20, leading: 28, bottom: 20, trailing: 28)).font(.system(size:UIScreen.main.bounds.width/15)).foregroundColor(index == 0 ? .white : .purple).background(Rectangle().fill(RadialGradient(gradient: Gradient(colors: [index == 0 ? .green : .black, index == 0 ? .black : .gray]), center: .center, startRadius: 0, endRadius: 85)).frame(width: 70, height: 70))
+                                                }.padding(.leading, index == 0 ? 15 : 19).padding(.top,10)
+                                                VStack (alignment: .leading){
+                                                    Text(i.MassPlayList[index] != "MyLoveTrack" ? i.MassPlayList[index] : "Мои любимые треки").fontWeight(.bold).font(.system(size:UIScreen.main.bounds.width/23)).foregroundColor(.white)
+                                                    Text("\(i.countTrack[index]) треков").font(.system(size:UIScreen.main.bounds.width/28)).foregroundColor(Color(red: 150.0/255.0, green: 150.0/255.0, blue: 150.0/255.0))
+                                                }
+                                                Spacer()
+                                            }
+                                        }
                                     }
-                                    Spacer()
+                                }
+                            }
+                        }
+                        else {
+                            ForEach(self.DataBasePlayList.DataPlayList){ i in
+                                ForEach(i.MassPlayList.filter{$0.hasPrefix(searchPlaylist) || searchPlaylist == ""} , id: \.self) { resultpoisk in
+                                    ForEach(i.MassPlayList.indices,id: \.self){
+                                        index in
+                                        if (i.MassPlayList[index] != "MyLoveTrack" ? i.MassPlayList[index] : "Мои любимые треки").uppercased() == resultpoisk.uppercased() {
+                                            Button(action: {
+                                                OpenPlayList(index: index)
+                                            }) {
+                                                HStack{
+                                                    HStack{
+                                                        Image(systemName: index == 0 ? "heart.fill" : "person" ).padding(.init(top: 20, leading: 28, bottom: 20, trailing: 28)).font(.system(size:UIScreen.main.bounds.width/15)).foregroundColor(.white).background(Rectangle().fill(RadialGradient(gradient: Gradient(colors: [.green, .black]), center: .center, startRadius: 0, endRadius: 85)).frame(width: 70, height: 70))
+                                                    }.padding(.leading).padding(.bottom,10)
+                                                    VStack (alignment: .leading){
+                                                        Text(i.MassPlayList[index] != "MyLoveTrack" ? i.MassPlayList[index] : "Мои любимые треки").fontWeight(.bold).font(.system(size:UIScreen.main.bounds.width/23)).foregroundColor(.white)
+                                                        Text("\(i.countTrack[index]) треков").font(.system(size:UIScreen.main.bounds.width/28)).foregroundColor(Color(red: 150.0/255.0, green: 150.0/255.0, blue: 150.0/255.0))
+                                                    }
+                                                    Spacer()
+                                                }
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
+                    
                 }
-                }
+                
+                Spacer()
             }
-            }
-            
-        }
-            
-            Spacer()
-        }
             
             ZStack{
                 PlayListNew(createshowPlayList: $createshowPlayList, namecreatePlayList: $namecreatePlayList, seeTabBar: $seeTabBar)
@@ -216,7 +216,7 @@ struct PlayList: View {
         
     }
     
-    }
+}
 struct PlayListNew: View {
     @Binding var createshowPlayList: Bool
     @Binding var namecreatePlayList: String
@@ -227,7 +227,7 @@ struct PlayListNew: View {
     let db = Firestore.firestore()
     func CreateNewPlayList(namecreatePlay: String ){
         if let user = user {
-          let uid = user.uid
+            let uid = user.uid
             let ratingDictionary = [
                 "NamePlayList": namecreatePlay,
                 "Image" : Array<String>(),
@@ -237,15 +237,15 @@ struct PlayListNew: View {
                 "ssilka" : Array<String>()
             ] as [String : Any]
             let docRef = Firestore.firestore().document("users/\(uid)/PlaylistUser/\(namecreatePlay)/\(namecreatePlay)/\(namecreatePlay)")
-        
-        docRef.setData(ratingDictionary){ (error) in
-            if let error = error {
-                print("error = \(error)")
-            } else {
-                print("data uploaded successfully")
-
+            
+            docRef.setData(ratingDictionary){ (error) in
+                if let error = error {
+                    print("error = \(error)")
+                } else {
+                    print("data uploaded successfully")
+                    
+                }
             }
-        }
             let docList = Firestore.firestore().document("users/\(uid)/usersList/PlayListUserArray")
             db.collection("users").document(uid).collection("usersList").addSnapshotListener { (snap, err) in
                 
@@ -270,13 +270,13 @@ struct PlayListNew: View {
                                 print("error = \(error)")
                             } else {
                                 print("data uploaded successfully")
-
+                                
                             }
                         }
                     }
                 }
             }
-    
+            
         }
         createshowPlayList.toggle()
         seeTabBar.toggle()
@@ -290,14 +290,14 @@ struct PlayListNew: View {
                 VStack{
                     HStack{
                         Spacer()
-                    Button(action: {withAnimation(Animation.default){
+                        Button(action: {withAnimation(Animation.default){
                             createshowPlayList.toggle()
-                        seeTabBar.toggle()
-                    }
-                        
-                    }) {
-                        Image(systemName: "xmark").font(.system(size: 18, weight: .regular)).foregroundColor(.gray)
-                    }.padding()
+                            seeTabBar.toggle()
+                        }
+                            
+                        }) {
+                            Image(systemName: "xmark").font(.system(size: 18, weight: .regular)).foregroundColor(.gray)
+                        }.padding()
                     }
                     Spacer()
                 }
@@ -309,26 +309,26 @@ struct PlayListNew: View {
                             }) {
                                 TextField("", text: $namecreatePlayList).multilineTextAlignment(.center).foregroundColor(.white).font(.system(size: UIScreen.main.bounds.width/12, weight: .bold)).padding(.bottom,5)
                             }.border(width: 1.5, edges: [.bottom], color: .gray).padding(.horizontal,30)
-                            }
+                        }
                         Button(action: {CreateNewPlayList(namecreatePlay: namecreatePlayList)}) {
                             Text("СОЗДАТЬ").foregroundColor(.black).font(.system(size: UIScreen.main.bounds.width/23, weight: .bold)).padding(.horizontal,40).padding(.vertical,15)
                         }.background( RoundedRectangle( cornerRadius: 35).fill(Color.white)).padding(.top,35)
                     }
                 }
             }.frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height - 65, alignment: .center).background( RoundedRectangle( cornerRadius: 20).fill(LinearGradient(gradient: Gradient(colors: [Color.init(red: 35.0/255.0, green: 37.0/255.0, blue: 38.0/255.0),Color.init(red: 0.0/255.0, green: 0.0/255.0, blue: 0.0/255.0)]), startPoint: .center, endPoint:.bottomTrailing)))
-            .gesture(
-            DragGesture()
-            .onEnded({ value in
-            if value.translation.height > 0 && value.translation.width < 150 && value.translation.width > -150 {
-            withAnimation {
-            self.offset = -(UIScreen.main.bounds.height * self.spacing) * CGFloat(self.index)
-                createshowPlayList.toggle()
-                seeTabBar.toggle()
-                        }
-                }
-                
-                    })
-           )
+                .gesture(
+                    DragGesture()
+                        .onEnded({ value in
+                            if value.translation.height > 0 && value.translation.width < 150 && value.translation.width > -150 {
+                                withAnimation {
+                                    self.offset = -(UIScreen.main.bounds.height * self.spacing) * CGFloat(self.index)
+                                    createshowPlayList.toggle()
+                                    seeTabBar.toggle()
+                                }
+                            }
+                            
+                        })
+                )
         }
     }
 }
@@ -339,10 +339,10 @@ extension View {
     }
 }
 struct EdgeBorder: Shape {
-
+    
     var width: CGFloat
     var edges: [Edge]
-
+    
     func path(in rect: CGRect) -> Path {
         var path = Path()
         for edge in edges {
@@ -352,21 +352,21 @@ struct EdgeBorder: Shape {
                 case .trailing: return rect.maxX - width
                 }
             }
-
+            
             var y: CGFloat {
                 switch edge {
                 case .top, .leading, .trailing: return rect.minY
                 case .bottom: return rect.maxY - width
                 }
             }
-
+            
             var w: CGFloat {
                 switch edge {
                 case .top, .bottom: return rect.width
                 case .leading, .trailing: return self.width
                 }
             }
-
+            
             var h: CGFloat {
                 switch edge {
                 case .top, .bottom: return self.width
